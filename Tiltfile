@@ -1,7 +1,7 @@
 load('ext://restart_process', 'docker_build_with_restart')
 
-def poc1(path):
-  docker_build_with_restart('wunderpark/poc1', path,
+def poc1(path = '.'):
+  docker_build_with_restart('zerotrustpoc/poc1', path,
     build_args = { 'node_env': 'development' },
     entrypoint = 'node dist/main.js',
     live_update = [
