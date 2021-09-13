@@ -54,9 +54,9 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: poc2-destination-rule
+  name: poc1-destination-rule
 spec:
-  host: poc2
+  host: poc1
   trafficPolicy:
     loadBalancer:
       simple: RANDOM
@@ -71,12 +71,12 @@ spec:
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: access-poc2
+  name: access-poc1
   namespace: default
 spec:
   podSelector:
     matchLabels:
-      app: poc2
+      app: poc1
   ingress:
     - from:
         - podSelector:
@@ -86,12 +86,12 @@ spec:
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: "poc2-viewer"
+  name: "poc1-viewer"
   namespace: default
 spec:
   selector:
     matchLabels:
-      app: poc2
+      app: poc1
   action: ALLOW
   rules:
   - from:
@@ -99,7 +99,7 @@ spec:
        requestPrincipals: ["issuer/*"]
     to:
     - operation:
-        paths: ["/poc2"]
+        paths: ["/poc1"]
     when:
     - key: request.auth.claims[roles]
       values: ["USER"]
